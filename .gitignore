@@ -1,0 +1,16 @@
+node_modules
+.DS_Store
+dist
+docs
+proxyConfig.js
+dist.*
+.idea
+.vscode
+config
+docker
+deploy.ps1
+yarn.lock
+
+release
+data
+tmp
