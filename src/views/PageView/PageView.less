@@ -1,13 +1,15 @@
 @pageWidth: 660px;
 @pageHeight: 880px;
+@contentsWidth: 500px;
 
 .page_view {
   width: 100%;
   height: 100%;
+
   display: flex;
   padding: 0;
   margin: 0;
-  flex: 0 0 1;
+
   background-color: var(--background);
   backface-visibility: hidden;
   font-size: 18px;
@@ -22,8 +24,7 @@
 .page_container {
   height: 100%;
   width: 100%;
-  // 避免平移时抖动
-  backface-visibility: hidden;
+  flex-shrink: 1;
 
   ::selection {
     color: var(--selectFg);
@@ -31,9 +32,8 @@
   }
 
   display: flex;
-  flex-shrink: 1;
-  flex-direction: row;
-  align-items: center;
+  justify-content: center;
+
   overflow: hidden;
   transition: 500ms;
 
@@ -59,10 +59,13 @@
 
 .page_content {
   height: 100%;
+  width: @pageWidth;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
+
   //background-color: #7c4dff;
 }
 
@@ -221,18 +224,9 @@
   box-sizing: content-box;
 }
 
-.page_side {
-  width: 100%;
-  height: 100%;
-}
-
 @media screen and (max-width: 800px) {
   .page_view {
     user-select: none;
-  }
-
-  .config-toggle {
-    display: none;
   }
 
   .page_container {

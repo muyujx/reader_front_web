@@ -48,23 +48,18 @@
                     <p class="name">{{ book.bookName }}</p>
 
                     <div class="item">
-                        <p>类型:</p>
-                        <p>{{ tagMap.get(book.tagId)?.name }}</p>
+                        <p>阅读进度:</p>
+
+                        <div class="detail_item_content">
+                            <p>{{ book.lastRead == 0 ? 0 : book.page }} / {{ book.totalPage }} 页</p>
+                            <p>{{ book.lastRead == 0 ? 0 : (book.page / book.totalPage * 100).toFixed(2) }}%</p>
+                        </div>
+
                     </div>
 
                     <div class="item">
-                        <p>上次读到:</p>
-                        <p>{{ book.lastRead == 0 ? 0 : book.page }}页</p>
-                    </div>
-
-                    <div class="item">
-                        <p>总页数:</p>
-                        <p>{{ book.totalPage }}页</p>
-                    </div>
-
-                    <div class="item">
-                        <p>进度:</p>
-                        <p>{{ book.lastRead == 0 ? 0 : (book.page / book.totalPage * 100).toFixed(2) }}%</p>
+                        <p>阅读时间:</p>
+                        <p>{{ Math.floor(book.readingCost / 60) }} 分钟</p>
                     </div>
 
                     <div class="item">
@@ -74,6 +69,7 @@
                             }}</p>
                     </div>
 
+
                 </div>
 
             </div>
@@ -82,7 +78,6 @@
 
 
         <el-pagination
-            v-model:current-page="page"
             v-model:page-size="pageSize"
             layout="prev, pager, next, jumper"
             :page-count="totalPage"
@@ -117,26 +112,18 @@ const tagMap = new Map<number, BookTag>;
 const tags = ref<BookTag[]>([]);
 const empty = ref(false);
 
-getBookList();
 
 function getBookList() {
     getFavoriteBookListAPi(page.value, pageSize.value, '', -1)
         .then((bookInfoList: FavoriteBookList) => {
 
-            empty.value = (bookInfoList.totalPage === 0);
+            empty.value = (bookInfoList.totalPage == 0);
 
             totalPage.value = bookInfoList.totalPage;
             bookList.value = bookInfoList.content;
         });
 }
 
-// 获取书籍标签
-getAllTag().then(res => {
-    for (let tag of res) {
-        tagMap.set(tag.id, tag);
-    }
-    tags.value = res;
-});
 
 function toBookPage(book: FavoriteBookInfo) {
 
@@ -155,6 +142,9 @@ function toBookPage(book: FavoriteBookInfo) {
 }
 
 function jumpToPage(pageIdx: number) {
+
+    console.log(`pageIdx = ${pageIdx}, totalPage = ${totalPage.value}, page = ${page.value}`);
+
     if (pageIdx < 1 || (totalPage.value != 0 && pageIdx > totalPage.value) || page.value == pageIdx) {
         return;
     }
@@ -188,9 +178,20 @@ function getLastRead(lastReadTime: number) {
     }
 }
 
+function refresh() {
+    // 获取书籍标签
+    getAllTag().then(res => {
+        for (let tag of res) {
+            tagMap.set(tag.id, tag);
+        }
+        tags.value = res;
+    });
+
+    getBookList();
+}
 
 defineExpose({
-    'refresh': getBookList
+    'refresh': refresh
 })
 
 </script>

@@ -118,7 +118,7 @@
 
 <script setup lang="ts">
 import {onBeforeUnmount, useTemplateRef, ref} from "vue";
-import {onBeforeRouteUpdate, useRouter} from "vue-router";
+import {useRouter} from "vue-router";
 import {BookInfo, BookShelfList} from "../../model/pageModel";
 import {getBookInfoList} from "../../apis/book";
 import {getLocalStorage, getLocalStorageInt, setLocalStorage} from "../../utils/localStorageUtil";
@@ -161,21 +161,22 @@ const titlePopoverDisable = ref(false);
 // 用来控制点击书籍的动画触发
 const curBookId = ref(-1);
 
-
 const curTag = ref(-1);
 let tagBookId = -1;
 
-onBeforeRouteUpdate(async () => {
-    getBookList();
-});
 
-// 获取书籍标签
-getAllTag().then(res => {
-    for (let tag of res) {
-        tagMap.set(tag.id, tag);
-    }
-    tags.value = res;
-});
+function refresh() {
+
+    getBookList();
+    // 获取书籍标签
+    getAllTag().then(res => {
+        for (let tag of res) {
+            tagMap.set(tag.id, tag);
+        }
+        tags.value = res;
+    });
+
+}
 
 initPage();
 
@@ -291,8 +292,6 @@ function searchBookList() {
     jumpToPage(1);
 }
 
-getBookList();
-
 function next() {
     jumpToPage(page.value + 1);
 }
@@ -358,7 +357,7 @@ function changeFavorite(book: BookInfo) {
 }
 
 defineExpose({
-    'refresh': getBookList
+    'refresh': refresh
 })
 
 </script>

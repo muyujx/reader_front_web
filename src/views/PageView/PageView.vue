@@ -20,7 +20,6 @@
              @click="toggleFooter"
              ref="pageContainer">
 
-            <div class="page_side"></div>
 
             <div class="book_cover"
                  :style="{backgroundImage: 'url(' + bookInfo.bigCoverPic + ')'}"
@@ -68,7 +67,6 @@
 
             </template>
 
-            <div class="page_side"></div>
 
         </div>
 
@@ -131,6 +129,7 @@ import {inkModeStore} from "../../store/inkMode";
 import ViewFooterBar from "../../components/ViewFooterBar.vue";
 import Config from "../Config/Config.vue";
 import {getRemotePage, updateRemotePage} from "../../apis/userRemotePage";
+import {recordReadingTime} from "./pageView.ts";
 
 // 是否显示底部时间
 const showClock = ref(false);
@@ -187,6 +186,10 @@ if (bookIdStr == null || isNaN(parseInt(bookIdStr))) {
     );
 }
 bookId = parseInt(bookIdStr);
+
+// 记录阅读时间
+recordReadingTime(bookId);
+
 
 // 页面缓存
 const pageCache = new PageCache(bookId);
@@ -291,6 +294,18 @@ const pageConfirm = ref(false);
 const pageConfirmRemote = ref(0);
 const pageConfirmLocal = ref(0);
 
+let updateInterval = -1;
+
+onBeforeUnmount(() => {
+    if (updateInterval == -1) {
+        return;
+    }
+    clearInterval(updateInterval);
+    // 推出前更新当前页
+    updateRemotePage(bookId, curPageItem.value.page);
+});
+
+
 async function initPage(bookId: number) {
     let localPage = getLocalStorageInt(bookId, PageCache.COVER_PAGE);
     // 获取服务端书页进度
@@ -306,16 +321,14 @@ async function initPage(bookId: number) {
     // 存在远程进度, 还是先获取本地进度书页
     getPageHtml(resPage);
 
-    const intervalId = setInterval(() => {
+    updateInterval = setInterval(() => {
+
         if (resPage != curPageItem.value.page) {
             resPage = curPageItem.value.page;
             updateRemotePage(bookId, resPage);
         }
     }, 5 * 1000);
 
-    onBeforeUnmount(() => {
-        clearInterval(intervalId);
-    });
 
     if (remotePage != localPage) {
         // 服务端进度和本地进度不一致, 手动确认要保留的进度

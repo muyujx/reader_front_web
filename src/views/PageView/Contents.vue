@@ -86,7 +86,6 @@ getContents(props.bookId).then((contentList: ContentsItem[]) => {
     contents.value = contentList;
 });
 
-
 /**
  * 开关目录
  */
@@ -113,9 +112,15 @@ function skipChapter(item: ContentsItem) {
 const curChapter: Ref<ContentsItem | null> = ref(null);
 
 defineExpose({
+
     show: () => {
         showContents.value = true;
     },
+
+    close: () => {
+        showContents.value = false;
+    },
+
 
     // 修改当前页数
     changePage: (page: number) => {
@@ -140,7 +145,9 @@ defineExpose({
     --contents-width: 500px;
 
     height: 100%;
+    flex-shrink: 0;
     width: var(--contents-width);
+
     margin-left: calc(0px - var(--contents-width));
 
     user-select: none;
@@ -154,6 +161,9 @@ defineExpose({
     border-radius: 0 20px 20px 0;
 
     z-index: 100;
+
+    //transform: translateX(-500px);
+
 
     &.show {
         margin-left: 0;
