@@ -16,7 +16,11 @@
              @touchmove.stop="touchControl.touchmove"
              @touchend.stop="touchControl.touchend"
              @click="toggleFooter"
-             ref="pageContainer">
+             ref="pageContainer"
+             :class="{
+                    'show_contents': showContents
+                }"
+        >
 
 
             <div class="book_cover"
@@ -27,11 +31,7 @@
             <template v-else>
 
 
-                <div class="page_content"
-                     :class="{
-                    'show_contents': showContents
-                }"
-                >
+                <div class="page_content">
 
                     <div class="page_indicator">
                         <p class="page_title">{{ curPageItem.title ?? '' }}</p>
