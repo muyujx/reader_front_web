@@ -94,7 +94,7 @@
 <style scoped lang="less" src="./FavoriteBook.less"/>
 
 <script setup lang="ts">
-import {onBeforeUnmount, ref} from "vue";
+import {ref} from "vue";
 import {useRouter} from "vue-router";
 import {BookTag} from "../../model/bookTag.ts";
 import {getAllTag} from "../../apis/bookTag.ts";
