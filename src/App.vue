@@ -1,9 +1,10 @@
 <template>
 
-
     <div id="main" @dblclick="fullScreen">
         <router-view/>
     </div>
+
+    <Loading/>
 
 </template>
 
@@ -17,6 +18,8 @@
 
 import {themeStore} from "./store/theme.ts";
 import hotkeys from 'hotkeys-js';
+import Loading from "./components/Loading.vue";
+
 
 const theme = themeStore();
 document.body.classList.add(theme.current);
