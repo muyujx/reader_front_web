@@ -99,9 +99,15 @@ function notifyShow() {
 function toggleContents(evt: any) {
     evt.preventDefault();
     showContents.value = !showContents.value;
+
+    if (showContents.value) {
+        scrollToMid();
+    }
+
     setLocalStorage(contentsStateKey, showContents.value.toString());
     notifyShow();
 }
+
 
 hotkeys('tab', toggleContents);
 onBeforeUnmount(() => {
