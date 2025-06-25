@@ -31,7 +31,9 @@
             <template v-else>
 
 
-                <div class="page_content">
+                <div class="page_content"
+
+                >
 
                     <div class="page_indicator">
                         <p class="page_title">{{ curPageItem.title ?? '' }}</p>
@@ -173,6 +175,8 @@ const route = useRoute();
 const router = useRouter();
 
 const bookIdStr = <string>route.query.bookId;
+// 书籍是否被收藏
+const isFavorite = route.query.favorite == "true";
 
 // 找不到有效的 bookId 跳回到书籍列表
 if (bookIdStr == null || isNaN(parseInt(bookIdStr))) {
@@ -183,9 +187,10 @@ if (bookIdStr == null || isNaN(parseInt(bookIdStr))) {
 }
 bookId = parseInt(bookIdStr);
 
-// 记录阅读时间
-recordReadingTime(bookId);
-
+if (isFavorite) {
+    // 记录阅读时间
+    recordReadingTime(bookId);
+}
 
 // 页面缓存
 const pageCache = new PageCache(bookId);
