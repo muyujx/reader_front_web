@@ -11,7 +11,7 @@ if (!$?)
     Write-Error 'docker build fail!'
     exit 1
 }
-
+New-Item -ItemType Directory -Path "./docker" -ErrorAction SilentlyContinue
 docker image save reader_front -o docker/reader_front.image
 if (!$?)
 {

@@ -8,11 +8,12 @@ interface RequestParam {
     body?: any
     queryParam?: any
 }
+
 let toLogin = true;
+
 async function afterRq<T>(axiosRq: Promise<any>): Promise<T> {
     const result = await axiosRq;
     const response: ResponseModel<T> = result.data;
-
 
 
     // 报错需要登录
@@ -40,8 +41,13 @@ async function afterRq<T>(axiosRq: Promise<any>): Promise<T> {
     return response.data;
 }
 
+export function addHost(path: string): string {
+    return path;
+}
+
 
 export default {
+
 
     post<T>(rqParam: RequestParam): Promise<T> {
         const url: string = rqParam.url;

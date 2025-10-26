@@ -7,19 +7,21 @@ export {}
 
 /* prettier-ignore */
 declare module 'vue' {
-  export interface GlobalComponents {
-    ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
-    ElButton: typeof import('element-plus/es')['ElButton']
-    ElCheckTag: typeof import('element-plus/es')['ElCheckTag']
-    ElDialog: typeof import('element-plus/es')['ElDialog']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
-    ElImageViewer: typeof import('element-plus/es')['ElImageViewer']
-    ElInput: typeof import('element-plus/es')['ElInput']
-    ElPagination: typeof import('element-plus/es')['ElPagination']
-    ElPopover: typeof import('element-plus/es')['ElPopover']
-    ElProgress: typeof import('element-plus/es')['ElProgress']
-    ElSlider: typeof import('element-plus/es')['ElSlider']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
-  }
+    export interface GlobalComponents {
+        ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
+        ElButton: typeof import('element-plus/es')['ElButton']
+        ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
+        ElCalendar: typeof import('element-plus/es')['ElCalendar']
+        ElCheckTag: typeof import('element-plus/es')['ElCheckTag']
+        ElDialog: typeof import('element-plus/es')['ElDialog']
+        ElIcon: typeof import('element-plus/es')['ElIcon']
+        ElImageViewer: typeof import('element-plus/es')['ElImageViewer']
+        ElInput: typeof import('element-plus/es')['ElInput']
+        ElPagination: typeof import('element-plus/es')['ElPagination']
+        ElPopover: typeof import('element-plus/es')['ElPopover']
+        ElProgress: typeof import('element-plus/es')['ElProgress']
+        ElSlider: typeof import('element-plus/es')['ElSlider']
+        RouterLink: typeof import('vue-router')['RouterLink']
+        RouterView: typeof import('vue-router')['RouterView']
+    }
 }
