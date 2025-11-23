@@ -132,6 +132,9 @@ const onWindowSizeChange = (width: number, height: number) => {
   } else if (height <= 900) {
     curPageSize = 9;
   }
+  if (width <= 1000) {
+    curPageSize = Math.min(curPageSize, 6)
+  }
   if (pageSize.value != curPageSize) {
     pageSize.value = curPageSize;
     getBookList();

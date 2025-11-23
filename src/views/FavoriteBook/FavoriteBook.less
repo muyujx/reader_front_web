@@ -4,11 +4,13 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding-top: 50px;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   box-sizing: border-box;
+}
+
+.el-pagination {
+  margin-bottom: 0;
 }
 
 .books {
@@ -208,19 +210,9 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
   .books {
-
-    margin-top: 30px;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(0, 320px));
-    grid-template-rows: repeat(auto-fill, 200px);
-    grid-row-gap: 20px;
-
-    .book {
-
-    }
+    height: 600px;
   }
 
 
